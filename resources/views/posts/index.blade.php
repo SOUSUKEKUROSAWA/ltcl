@@ -8,17 +8,39 @@
     </head>
     <body>
         <h1>Blog Name</h1>
-        [<a href='/posts/create'>create</a>]
         <div class='posts'>
+            [<a href='/posts/create'>create</a>]
             @foreach ($posts as $post)
                 <div class='post'>
-                    <a href='/posts/{{ $post->id}}'><h2 class='title'>{{ $post->title }}</h2></a>
+                    <h2 class='title'>
+                        <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
+                    </h2>
                     <p class='body'>{{ $post->body }}</p>
+                    <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post" style="display:inline">
+                    {{--<form action="/posts/{{ $post->id }}" id="form_delete" method="post" style="display:inline">--}}
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="buttonClick( {{$post->id}} )">delete</button>
+                    </form>
                 </div>
             @endforeach
         </div>
         <div class='paginate'>
             {{ $posts->links() }}
         </div>
+        {{--<script>
+            function buttonClick(){
+                if (window.confirm('削除すると復元できません．\n本当に削除しますか？')){
+                    document.getElementById('form_delete').submit();
+                }
+            }
+        </script>--}}
+        <script>
+            function buttonClick(PostId){
+                if (window.confirm('削除すると復元できません．\n本当に削除しますか？')){
+                    document.getElementById(`form_${PostId}`).submit();
+                }
+            }
+        </script>
     </body>
 </html>
