@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    @extends('layouts.app')
+
+    @section('content')
     <head>
         <meta charset="utf-8">
         <title>Blog</title>
@@ -47,4 +50,5 @@
             }
         </script>
     </body>
+    @endsection
 </html>
