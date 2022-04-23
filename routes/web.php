@@ -11,20 +11,25 @@
 |
 */
 
-Route::get('/', 'PostController@index');
-Route::get('/posts/create', 'PostController@create');
-Route::get('/posts/{post}', 'PostController@show');
-Route::get('/posts/{post}/edit', 'PostController@edit');
-Route::get('/categories/{category}', 'CategoryController@index');
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('/', 'PostController@index');
+    //Route::get('/', 'PostController@index')->middleware('auth');
+    Route::get('/posts/create', 'PostController@create');
+    Route::get('/posts/{post}', 'PostController@show');
+    Route::get('/posts/{post}/edit', 'PostController@edit');
+    Route::get('/categories/{category}', 'CategoryController@index');
+    /*Route::get('/posts', function() {
+        return view('posts/index');
+    });*/
+    //Route::get('/posts', 'PostController@index');
 
-Route::post('/posts', 'PostController@store');
+    Route::post('/posts', 'PostController@store');
 
-Route::put('/posts/{post}', 'PostController@update');
+    Route::put('/posts/{post}', 'PostController@update');
 
-Route::delete('/posts/{post}', 'PostController@delete');
+    Route::delete('/posts/{post}', 'PostController@delete');
+});
 
-/*Route::get('/posts', function() {
-    return view('posts/index');
-});*/
+Auth::routes();
 
-//Route::get('/posts', 'PostController@index');
+Route::get('/home', 'HomeController@index')->name('home');
