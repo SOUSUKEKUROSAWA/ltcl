@@ -34,6 +34,15 @@
         <div class='paginate'>
             {{ $posts->links() }}
         </div>
+        <div>
+            @foreach($questions as $question)
+                <div>
+                    <a href="https://teratail.com/questions/{{ $question['id'] }}">
+                        {{ $question['title'] }}
+                    </a>
+                </div>
+            @endforeach
+        </div>
         {{--<script>
             function buttonClick(){
                 if (window.confirm('削除すると復元できません．\n本当に削除しますか？')){
